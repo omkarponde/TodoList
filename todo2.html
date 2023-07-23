@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>List no. 2</title>
+    <link rel="stylesheet" href="newtask.css">
+    <link rel="stylesheet" href="main.css">
+  </head>
+  <body>
+    <h1 style="text-align: center;">TO DO LIST</h1>
+    <div class="add-task-container">
+      
+      <div class="add-task-main">
+
+
+
+
+        <input type="text" placeholder="Enter task" class="input-task" id="input-task">
+
+
+
+
+        <div class="row-two">
+          <div class="priority-div">
+            <p>Priority</p>
+            <select id="priority" >
+                <!-- Each option element represents a choice in the dropdown -->
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <div class="due-div">
+            <p>Due</p>
+            <input type="datetime-local" id="datetimeInput">
+          </div>
+          <input type="text" placeholder="Enter Category" id="input-category">
+
+          
+        </div>
+        
+
+
+        <div class="row-three">
+          <div class="subtask-container">
+            <input type="text" placeholder="Enter Subtask" id="input-subtask">
+            <button class="add-subtask-button" onclick="addSubtask()">Add</button>
+            
+          </div>
+          <div class="tag-container">
+            <input type="text" placeholder="Enter tag" id="input-tag">
+            <button class="add-tag-button" onclick="addTag()">Add</button>
+          </div>
+        </div>
+
+        <div class="row-four">
+          <div class="subtasksAdded" id="subtasksAdded"></div>
+          <div class="tags-added" id="tags-added"></div>
+        </div>
+        
+        
+        <button class="addtask-button" onclick="addTask()">Add Task</button>
+      </div>
+    </div>
+    
+    <div class="main-container">
+      <div class="container">
+        <h1>Tasks to be Completed</h1>
+        <div class="to-do-container" id="to-do-container"></div>
+      </div>
+      
+      <div class="container">
+        <h1>Completed Tasks</h1>
+        <div class="done-container" id="done-container">
+            
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <div class="storting-container">
+      
+        <button onclick="sortDuedate()">Sort by Due date</button>
+        
+
+
+      
+        <button onclick="sortPriority()">Sort by Priority</button>
+        
+      
+    </div>
+
+
+    <div id="edit-modal">
+      <input type="text" name="editedTask" id="editedTask" placeholder="Enter the new task">
+      <select id="editPriority" >
+        <!-- Each option element represents a choice in the dropdown -->
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+      <input type="datetime-local" id="editDue">
+      <input type="text" id="editCategory" placeholder="caterogy">
+      <button id="close-modal">Done</button>
+    </div>
+
+
+      
+
+
+
+
+    </div>
+    <script src="todo2.js" async></script>
+  </body>
+</html> 
