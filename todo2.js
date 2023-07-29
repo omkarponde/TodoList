@@ -8,9 +8,8 @@ let subtasks=[];
 let tags=[];
 let tasks = [];
 let tasksDone =[];
-let priorityList = [];
-let dueDateList =[];
 let filter =[];
+let uniqueID = 1;
 
 function saveTasks() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -69,7 +68,7 @@ function displaySubtasks(){
     newtasktext.innerHTML = subtasks[i].text;
     newtasktext.classList.add('subtask-text');
     newtaskdiv.appendChild(newtasktext);
-    
+
   }
 }
 
@@ -88,7 +87,7 @@ function displayTags(){
     newtasktext.innerHTML = tags[i].text;
     newtasktext.classList.add('tag-text');
     newtaskdiv.appendChild(newtasktext);
-    
+
   }
 }
 
@@ -102,6 +101,7 @@ function addTask(){
     prio : "",
     sub : [],
     tag:[],
+    uID : uniqueID
   }
   if(task.value === ''){
     alert("Invalid input!!!");
@@ -110,7 +110,7 @@ function addTask(){
   else{
     newtask.text = task.value;
   }
-  
+
   newtask.prio = priority.value;
   if(due_date_time.value === ''){
     alert("add due date and time !!!!");
@@ -119,7 +119,7 @@ function addTask(){
   else{
     newtask.due = due_date_time.value;
   }
-  
+
   if(cate.value === '')
   {
     alert("Enter category");
@@ -134,9 +134,10 @@ function addTask(){
   tags =[];
   subtasks = [];
   tasks.push(newtask);
-  task.value = '';  
+  task.value = '';
   cate.value = '';
   due_date_time.value = '';
+  uniqueID++;
   displaySubtasks();
   displayTags();
   saveTasks();
@@ -187,7 +188,7 @@ function displayTodoTasks(){
     datetimetext.innerHTML = tasks[i].due;
     datetimetext.classList.add('date-time-text');
     upper.appendChild(datetimetext);
-    
+
     let taskPriority = document.createElement('p');
     taskPriority.innerHTML = tasks[i].prio;
     taskPriority.classList.add('priority-text');
@@ -249,7 +250,7 @@ function displayTodoTasks(){
 
 
     }
-    
+
     for(let k=0;k<tasks[i].tag.length;k++)
     {
       let tagText = document.createElement('p');
@@ -263,11 +264,11 @@ function displayTodoTasks(){
 const deleteTask = e => {
   tasks.splice(e.target.id, 1);
   displayTodoTasks();
-} 
+}
 
 const taskChecked =e=>{
   let newtask = {
-  
+
     text : tasks[e.target.id].text,
     due : tasks[e.target.id].due,
     category : tasks[e.target.id].category,
@@ -285,7 +286,7 @@ const taskChecked =e=>{
 
 const taskUnChecked =e=>{
   let newtask = {
-  
+
     text : tasksDone[e.target.id].text,
     due : tasksDone[e.target.id].due,
     category : tasksDone[e.target.id].category,
@@ -295,7 +296,7 @@ const taskUnChecked =e=>{
 
   }
   tasks.push(newtask);
-  
+
   tasksDone.splice(e.target.id, 1);
   displayTodoTasks();
   displayDoneTasks();
@@ -316,7 +317,7 @@ function displayDoneTasks()
     doneTask.classList.add("done-task");
     doneContainer.appendChild(doneTask);
 
-    
+
     let newtaskcheckbox = document.createElement('input');
     newtaskcheckbox.type = 'checkbox';
     newtaskcheckbox.classList.add('task-checkbox');
@@ -384,7 +385,7 @@ function sortPriority(){
 const editTask = e => {
   document.getElementById('edit-modal').style.display = 'block';
   editId = e.target.id;
-} 
+}
 document.querySelector('#close-modal').addEventListener('click', function(e) {
   let editedTask = document.getElementById("editedTask");
   let editedPriority = document.getElementById("editPriority");
@@ -409,4 +410,237 @@ document.querySelector('#close-modal').addEventListener('click', function(e) {
       document.getElementById('edit-modal').style.display = 'none';
       displayTodoTasks();
   }
-});  
+});
+
+
+
+function applyFilter(){
+  const filterby = document.getElementById("filter-by");
+  const dueDateFilter = document.getElementById('dueDateFilter');
+  const priorityFilter = document.getElementById('priorityFilterContainer');
+  const categoryFilter = document.getElementById('categoryFilterContainer');
+  if (filterby.value === 'due-date-filter') {
+    dueDateFilter.style.display = 'flex';
+  } else {
+    dueDateFilter.style.display = 'none';
+  }
+  if (filterby.value === 'priority-filter') {
+    priorityFilter.style.display = 'flex';
+  } else {
+    priorityFilter.style.display = 'none';
+  }
+  if (filterby.value === 'category-filter') {
+    categoryFilter.style.display = 'flex';
+  } else {
+    categoryFilter.style.display = 'none';
+  }
+}
+function filterByDueDate() {
+  const startDateInput = document.getElementById('startDateInput').value;
+  const endDateInput = document.getElementById('endDateInput').value;
+
+  // Apply filtering logic based on startDateInput and endDateInput
+  // For example, you can filter tasks whose due date falls between the selected dates
+
+  // Placeholder code to display the selected dates (you can replace this with actual filtering logic)
+  alert(`Filter tasks from ${startDateInput} to ${endDateInput}`);
+
+  // text : "",
+  // due : "",
+  // category : "",
+  // prio : "",
+  // sub : [],
+  // tag:[],
+  // uID : uniqueID
+  filter=[];
+  for(var i=0; i<tasks.length; i++)
+  {
+    if(tasks[i].due >= startDateInput && tasks[i].due <= endDateInput)
+    {
+      filter.push(tasks[i]);
+    }
+  }
+  displayDueDateFilter();
+}
+function filterByPriority() {
+  const priorityInput = document.getElementById('priorityFilter').value;
+
+  // Apply filtering logic based on startDateInput and endDateInput
+  // For example, you can filter tasks whose due date falls between the selected dates
+
+  // Placeholder code to display the selected dates (you can replace this with actual filtering logic)
+  alert(`Filter tasks by priority ${priorityInput}`);
+
+  // Close the filter pop-up
+  // const dueDateFilter = document.getElementById('dueDateFilter');
+  // dueDateFilter.style.display = 'none';
+  filter =[];
+  for(var i=0; i<tasks.length; i++)
+  {
+    if(tasks[i].prio==priorityInput)
+    {
+      filter.push(tasks[i]);
+    }
+  }
+  displayDueDateFilter();
+
+}
+function filterByCategory() {
+  const categoryInput = document.getElementById('categoryFilterInput').value;
+
+  // Apply filtering logic based on startDateInput and endDateInput
+  // For example, you can filter tasks whose due date falls between the selected dates
+
+  // Placeholder code to display the selected dates (you can replace this with actual filtering logic)
+  alert(`Filter tasks category ${categoryInput}`);
+
+  // Close the filter pop-up
+  // const dueDateFilter = document.getElementById('dueDateFilter');
+  // dueDateFilter.style.display = 'none';
+  filter =[];
+  for(var i=0; i<tasks.length; i++)
+  {
+    if(tasks[i].category==categoryInput)
+    {
+      filter.push(tasks[i]);
+    }
+  }
+  displayDueDateFilter();
+}
+
+function displayDueDateFilter(){
+
+
+
+
+
+
+
+
+
+  let taskcontainer = document.getElementById("to-do-container");
+  taskcontainer.innerHTML ="";
+  for( let i=0; i<filter.length;i++){
+
+
+
+    let todoTask = document.createElement("div");
+    todoTask.classList.add('to-do-task');
+    todoTask.innerHTML = "";
+    taskcontainer.appendChild(todoTask);
+
+
+    let upper = document.createElement('div');
+    upper.classList.add('upper');
+    upper.innerHTML =  "";
+    todoTask.appendChild(upper);
+
+    let newtaskcheckbox = document.createElement('input');
+    newtaskcheckbox.type = 'checkbox';
+    newtaskcheckbox.classList.add('task-checkbox');
+    newtaskcheckbox.setAttribute("id",i);
+    newtaskcheckbox.addEventListener('mouseover', function() {
+      this.checked = true; // Set the checkbox value to true (checked)
+    });
+    newtaskcheckbox.addEventListener('mouseout', function() {
+      this.checked = false; // Set the checkbox value to true (checked)
+    });
+    newtaskcheckbox.checked = false;
+    newtaskcheckbox.addEventListener('click',taskChecked);
+    upper.appendChild(newtaskcheckbox);
+
+    let newtasktext = document.createElement('p');
+    newtasktext.innerHTML = filter[i].text;
+    newtasktext.classList.add('task-text');
+    upper.appendChild(newtasktext);
+
+    // let datetime = tasks[i].due;
+
+    let datetimetext = document.createElement('p');
+    datetimetext.innerHTML = filter[i].due;
+    datetimetext.classList.add('date-time-text');
+    upper.appendChild(datetimetext);
+
+    let taskPriority = document.createElement('p');
+    taskPriority.innerHTML = filter[i].prio;
+    taskPriority.classList.add('priority-text');
+    upper.appendChild(taskPriority);
+
+    let newtaskcate = document.createElement('p');
+    newtaskcate.innerHTML = filter[i].category;
+    newtaskcate.classList.add('categorey-text');
+    upper.appendChild(newtaskcate);
+
+    let newtaskEditbutton = document.createElement('button');
+    newtaskEditbutton.innerHTML = "Edit";
+    newtaskEditbutton.setAttribute("id",i);
+    newtaskEditbutton.classList.add('edit-button');
+    newtaskEditbutton.addEventListener('click', editTask)
+    upper.appendChild(newtaskEditbutton);
+
+    let newtaskDeletebutton = document.createElement('button');
+    newtaskDeletebutton.innerHTML = "Delete";
+    newtaskDeletebutton.setAttribute("id",i);
+    newtaskDeletebutton.classList.add('delete-button');
+    newtaskDeletebutton.addEventListener('click', deleteTask);
+    upper.appendChild(newtaskDeletebutton);
+
+    let lower = document.createElement('div');
+    lower.innerHTML = "";
+    lower.classList.add('lower');
+    todoTask.appendChild(lower);
+
+    let subtaskContainer = document.createElement('div');
+    subtaskContainer.innerHTML =  "";
+    subtaskContainer.classList.add('subtask-section');
+    lower.appendChild(subtaskContainer);
+
+    let tagContainer = document.createElement('div');
+    tagContainer.innerHTML = "";
+    tagContainer.classList.add('tag-section');
+    lower.appendChild(tagContainer);
+
+    for(let j=0;j<tasks[i].sub.length;j++){
+
+
+      let creds = document.createElement('div');
+      creds.innerHTML = "";
+      creds.classList.add('subtask-creds');
+      subtaskContainer.appendChild(creds);
+
+
+      let newcheckbox = document.createElement('input');
+      newcheckbox.type = 'checkbox';
+      newcheckbox.classList.add('subtask-checkbox');
+      newcheckbox.setAttribute("no",j);
+      creds.appendChild(newcheckbox);
+
+      let subtaskText = document.createElement('p');
+      subtaskText.innerHTML = filter[i].sub[j].text;
+      subtaskText.classList.add('subtask-para');
+      creds.appendChild(subtaskText);
+
+
+    }
+
+    for(let k=0;k<tasks[i].tag.length;k++)
+    {
+      let tagText = document.createElement('p');
+      tagText.innerHTML = filter[i].tag[k].text;
+      tagText.classList.add('tag-para');
+      tagContainer.appendChild(tagText);
+    }
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+}
