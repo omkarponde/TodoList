@@ -8,12 +8,8 @@
   <body>
     <h1 style="text-align: center;">TO DO LIST</h1>
     <div class="add-task-container">
-      
+
       <div class="add-task-main">
-
-
-
-
         <input type="text" placeholder="Enter task" class="input-task" id="input-task">
 
 
@@ -21,7 +17,7 @@
 
         <div class="row-two">
           <div class="priority-div">
-            <p>Priority</p>
+            <p>Priority :</p>
             <select id="priority" >
                 <!-- Each option element represents a choice in the dropdown -->
               <option value="low">Low</option>
@@ -30,21 +26,18 @@
             </select>
           </div>
           <div class="due-div">
-            <p>Due</p>
+            <p>Due :</p>
             <input type="datetime-local" id="datetimeInput">
           </div>
           <input type="text" placeholder="Enter Category" id="input-category">
 
-          
+
         </div>
-        
-
-
         <div class="row-three">
           <div class="subtask-container">
             <input type="text" placeholder="Enter Subtask" id="input-subtask">
             <button class="add-subtask-button" onclick="addSubtask()">Add</button>
-            
+
           </div>
           <div class="tag-container">
             <input type="text" placeholder="Enter tag" id="input-tag">
@@ -56,22 +49,77 @@
           <div class="subtasksAdded" id="subtasksAdded"></div>
           <div class="tags-added" id="tags-added"></div>
         </div>
-        
-        
+
+
         <button class="addtask-button" onclick="addTask()">Add Task</button>
       </div>
     </div>
-    
+
+    <div class="storting-container">
+
+      <button onclick="sortDuedate()">Sort by Due date</button>
+      <button onclick="sortPriority()">Sort by Priority</button>
+      <button onclick="displayTodoTasks()">Clear Filter</button>
+      <select id="filter-by" >
+          <!-- Each option element represents a choice in the dropdown -->
+        <option value="due-date-filter">Due date range</option>
+        <option value="priority-filter">Priority</option>
+        <option value="category-filter">Category</option>
+      </select>
+      <button class="apply-filter" id="apply-filter" onclick="applyFilter()">Apply Filter</button>
+      <div id="dueDateFilter" class="filter-pop-up" style="display: none;">
+        <input type="datetime-local" id="startDateInput">
+        <input type="datetime-local" id="endDateInput">
+        <button onclick="filterByDueDate()">Apply</button>
+      </div>
+
+      <div id="priorityFilterContainer" class="filter-pop-up" style="display: none;">
+        <select id="priorityFilter">
+            <!-- Each option element represents a choice in the dropdown -->
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+
+        </select>
+        <button onclick="filterByPriority()">Apply</button>
+      </div>
+
+
+      <div id="priorityFilterContainer" class="filter-pop-up" style="display: none;">
+        <select id="priorityFilter">
+            <!-- Each option element represents a choice in the dropdown -->
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+
+        </select>
+        <button onclick="filterByPriority()">Apply</button>
+      </div>
+
+
+      <div id="categoryFilterContainer" class="filter-pop-up" style="display: none;">
+        <input type="text" placeholder="Enter Category" id="categoryFilterInput">
+        <button onclick="filterByCategory()">Apply</button>
+      </div>
+
+
+    </div>
+
     <div class="main-container">
       <div class="container">
         <h1>Tasks to be Completed</h1>
         <div class="to-do-container" id="to-do-container"></div>
       </div>
-      
+
+
+
+
+
+
       <div class="container">
         <h1>Completed Tasks</h1>
         <div class="done-container" id="done-container">
-            
+
         </div>
       </div>
 
@@ -79,17 +127,7 @@
 
 
 
-    <div class="storting-container">
-      
-        <button onclick="sortDuedate()">Sort by Due date</button>
-        
 
-
-      
-        <button onclick="sortPriority()">Sort by Priority</button>
-        
-      
-    </div>
 
 
     <div id="edit-modal">
@@ -101,12 +139,12 @@
         <option value="high">High</option>
       </select>
       <input type="datetime-local" id="editDue">
-      <input type="text" id="editCategory" placeholder="caterogy">
+      <input type="text" id="editCategory" placeholder="category">
       <button id="close-modal">Done</button>
     </div>
 
 
-      
+
 
 
 
@@ -114,4 +152,4 @@
     </div>
     <script src="todo2.js" async></script>
   </body>
-</html> 
+</html>
